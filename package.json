@@ -6,6 +6,10 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^6.1.9",
     "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
