@@ -62,7 +62,7 @@ use users
 We need to stay connected with mongosh into a mongoDB. We will execute this command for create a user for this database
 
 ~~~~
-{ user: "superadmin", pwd: "superadmin", roles: [{ role: "readWrite", db: "users" }] })
+db.createUser({ user: "superadmin", pwd: "superadmin", roles: [{ role: "readWrite", db: "users" }] })
 ~~~~
 
 After this we will connect with this new user
@@ -82,6 +82,11 @@ MONGODB_PORT= <port of mongodb>
 MONGODB_DATABASE= <database>
 ~~~~
 
+For collect variable envoirment from .env file
+~~~
+yarn add dotenv
+~~~
+
 ### Instaling Moongose ORM
 
 For connect with Mongo DataBase we will use ORM Moongose,  first we need to add moongose to Node JS Project
@@ -90,4 +95,33 @@ For connect with Mongo DataBase we will use ORM Moongose,  first we need to add 
 yarn add mongoose
 ~~~
 
+
+## Post to Api
+
+We will Post into url api with aJSON, we will use the Postman , we will go to POST action in Postman, and meny body, after we will select JSON type text.
+
+![Postman](./images/postman.png)
+
+~~~
+{
+
+"username": "user1",
+
+"password": "passworduser1"
+
+}
+~~~
+
+After we need to connect to BD users and see if the users is created
+
+~~~~
+mongosh "mongodb://<docker container ip>" --username superadmin --password superadmin --authenticationDatabase users
+~~~~
+
+~~~
+use m03
+~~~
+~~~
+db.users.find({})
+~~~
 
