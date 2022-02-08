@@ -95,8 +95,15 @@ For connect with Mongo DataBase we will use ORM Moongose,  first we need to add 
 yarn add mongoose
 ~~~
 
+## Using Express Api
+First we need to start our express aplication, we will use the command 
 
-## Post to Api
+~~~
+yarn start
+~~~
+
+
+### Post User
 
 We will Post into url api with aJSON, we will use the Postman , we will go to POST action in Postman, and meny body, after we will select JSON type text.
 
@@ -123,5 +130,26 @@ use m03
 ~~~
 ~~~
 db.users.find({})
+~~~
+
+### Get User
+For get a specific user we will put on browser 
+
+~~~
+http://localhost:3000/<username>
+~~~
+
+
+### Delete User
+
+For delete a user we will use DELETE request from postman, we will put the url and a username of the user that we wan't to delete
+
+![Postman](./images/postman2.png)
+
+### Get all Users
+For get the all users we will put this command
+
+~~~
+http://localhost:3000/users
 ~~~
 

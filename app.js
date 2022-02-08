@@ -8,11 +8,20 @@ app.use(express.json())
 
 const User = require("./models/user.model");
 
-app.get("/", async (req, res) => {
-	const dbRes = await User.find({});
+app.get("/user/:username", async (req, res) => {
+	var username = req.params.username;
 
-	console.log(dbRes);
-	return res.send("Hello World!");
+	var dbRes = await User.find({ 'username': username }, function (err, dbres) {
+		if (err) {
+			console.log("El usuari no existeix");
+			res.send("El usuari no existeix");
+			return handleError(err);
+		}
+		else {
+			res.send(dbres);
+		}
+
+	})
 });
 
 app.post("/user", async (req, res) => {
@@ -24,6 +33,24 @@ app.post("/user", async (req, res) => {
 	});
 	return res.send("")
 });
+
+
+app.delete("/user/:username", async (req, res) => {
+	var username = req.params.username;
+
+	User.deleteMany({ 'username': username }, function (err) {
+		if (err) return handleError(err);
+
+	});
+
+});
+
+
+app.get("/users", async (req, res) => {
+	var dbRes = await User.find({});
+	res.send(dbRes)
+});
+
 
 const server = app.listen(port, async () => {
 	const db = await getConnection();
