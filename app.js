@@ -29,7 +29,8 @@ app.post("/user", async (req, res) => {
 
 	await User.create({
 		username: req.body.username,
-		password: req.body.password
+		password:
+			salt:
 	});
 	return res.send("")
 });
