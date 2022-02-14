@@ -4,9 +4,15 @@ const { getConnection, disconnectDB } = require("./dbConnection");
 const app = express();
 const port = 3000;
 
-app.use(express.json())
-
+const userRouter = require("./routes/user.route")
+const loginRouter = require("./routes/auth.route")
 const User = require("./models/user.model");
+
+app.use(express.json())
+app.use('', userRouter)
+app.use('', loginRouter)
+
+//Express Sanitize
 
 app.get("/user/:username", async (req, res) => {
 	var username = req.params.username;
@@ -24,18 +30,6 @@ app.get("/user/:username", async (req, res) => {
 	})
 });
 
-app.post("/user", async (req, res) => {
-	console.log(req.body);
-
-	await User.create({
-		username: req.body.username,
-		password:
-			salt:
-	});
-	return res.send("")
-});
-
-
 app.delete("/user/:username", async (req, res) => {
 	var username = req.params.username;
 
@@ -43,7 +37,6 @@ app.delete("/user/:username", async (req, res) => {
 		if (err) return handleError(err);
 
 	});
-
 });
 
 

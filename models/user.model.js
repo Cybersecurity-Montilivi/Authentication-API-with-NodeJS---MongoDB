@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-
 const { Schema } = mongoose;
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
     username: String,
@@ -8,23 +8,17 @@ const userSchema = new Schema({
     salt: String
 });
 
-const bcrypt = require('bcrypt');
+const modelUser = mongoose.model('User', userSchema);
 
-modelUser.methods.setPassword = function (yourPassword) {
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(yourPassword, salt, (err, hash) => {
-            console.log("Usuari creat" + userSchema + " password: " + password + " salt:"
-                + salt)
-            this.yourPassword, this.salt
-        });
-    })
+modelUser.methods.verifyPassword = async function (password) {
+    return await bcrypt.compare(password, this.hashPassword)
 }
 
-//https://medium.com/@manishsundriyal/a-quick-way-for-hashing-passwords-using-bcrypt-with-nodejs-8464f9785b67
+modelUser.methods.setPassword = async function (password) {
+    this.salt = await bcrypt.genSalt(saltRounds);
+    this.hash = await bcrypt.hash(password, this.salt);
 
-//https://www.loginradius.com/blog/async/hashing-user-passwords-using-bcryptjs/
+}
 
-
-const modelUser = mongoose.model('User', userSchema);
 
 module.exports = modelUser
