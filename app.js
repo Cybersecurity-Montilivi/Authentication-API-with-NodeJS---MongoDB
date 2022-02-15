@@ -1,49 +1,68 @@
-// Carguem els moduls necessaris
-var express 	= require("express"); 
-var app 	= express();
-var bodyParser 	= require('body-parser');
-var request 	= require("request");
+const express = require("express");
+const logger = require("./log/logger.log")
+const { getConnection, disconnectDB } = require("./dbConnection");
+const app = express();
+const port = 3000;
 
-// Crida en aquesta URL
-var url = "https://jsonplaceholder.typicode.com/todos/"
+app.use(express.json())
 
-//Farem Servir un formatador de JSON
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
- 
-// Execmple: GET http://localhost:8080/users
-// Fem un GET a la URL per obtenir un llistat en JSON
-app.get('/users', function(req, res) {
-	request({
-	    url: url,
-	    json: false
-	}, function (error, response, body) {
+const User = require("./models/user.model");
 
-	    if (!error && response.statusCode === 200) {
-	    	// Printem la resposta en el navegador
-	        res.send(body) 
-	    }
+app.get("/user/:username", async (req, res) => {
+	var username = req.params.username;
+
+	var dbRes = await User.find({ 'username': username }, function (err, dbres) {
+		if (err) {
+			console.log("El usuari no existeix");
+			res.send("El usuari no existeix");
+			return handleError(err);
+		}
+		else {
+			res.send(dbres);
+		}
+
 	})
 });
- 
-//Exemple: GET http://localhost:8888/items/3
-//Farem crida a la web filtrant per id
-app.get('/users/:id', function(req, res) {
 
-	var itemId = req.params.id;
+app.post("/user", async (req, res) => {
+	console.log(req.body);
 
-	request({
-	    url: url+itemId,
-	    json: false
-	}, function (error, response, body) {
+	await User.create({
+		username: req.body.username,
+		password: req.body.password
+	});
+	return res.send("")
+});
 
-	    if (!error && response.statusCode === 200) {
-	    	// Printem la resposte en el navegador formatada
-	        res.send(body) 
-	    }
-	})
-})
-  
-var server = app.listen(8888, function () {
-    console.log('Server is running..'); 
+
+app.delete("/user/:username", async (req, res) => {
+	var username = req.params.username;
+
+	User.deleteMany({ 'username': username }, function (err) {
+		if (err) return handleError(err);
+
+	});
+
+});
+
+
+app.get("/users", async (req, res) => {
+	var dbRes = await User.find({});
+	res.send(dbRes)
+});
+
+
+const server = app.listen(port, async () => {
+	const db = await getConnection();
+	console.log(db);
+	console.log(`Example app listening on port ${port}`);
+});
+
+process.on("SIGINT", function () {
+	disconnectDB().then(() => {
+		server.close(function () {
+			console.log("closed connection");
+			process.exit(0);
+		});
+	});
 });
