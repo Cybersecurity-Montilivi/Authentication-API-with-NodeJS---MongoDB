@@ -1,3 +1,5 @@
+const User = require("../models/user.model")
+
 const createUser = async (username, password) => {
     //verifica que l'usuari no existeix
     const userExists = await User.findOne({ username: username })
@@ -13,4 +15,8 @@ const createUser = async (username, password) => {
 
 }
 
-module.exports = { createUser }
+const getUser = async (id) => {
+    return await User.findById(id);
+}
+
+module.exports = { createUser, getUser }

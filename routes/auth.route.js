@@ -1,21 +1,21 @@
 const express = require("express");
-const authRouter = express.Router()
-const app = express();
-
 const { login } = require("../service/auth.service")
 const expressSanitizer = require('express-sanitizer');
 
-//app.use(express.json());
-//app.use(expressSanitizer());
+const authRouter = express.Router();
 
-authRouter.post('/login', async (req, res) => {
+
+authRouter.post('/', async (req, res) => {
     //Sanejar l'entrada
     const username = req.body.username
     const password = req.body.password
-    //Demanar l'auth
-    const isAutenticated = await login(username, password)
-    //Demanra autenticacio al servei
-    return res.send(isAutenticated)
+
+    const token = await login(username, password)
+
+    if (token) {
+        return res.send({ token })
+    }
+    return res.status(403).send('Invalid username or password')
 
 })
 

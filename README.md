@@ -153,3 +153,6 @@ For get the all users we will put this command
 http://localhost:3000/users
 ~~~
 
+### Architecture of this project
+
+Middelware <> Router <> Service <> Model <> BD
