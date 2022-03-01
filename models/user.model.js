@@ -15,7 +15,7 @@ userSchema.methods.verifyPassword = async function (password) {
 
 userSchema.methods.setPassword = async function (password) {
     this.salt = await bcrypt.genSalt(10);
-    this.hash = await bcrypt.hash(password, this.salt);
+    this.hashPassword = await bcrypt.hash(password, this.salt);
 
 }
 

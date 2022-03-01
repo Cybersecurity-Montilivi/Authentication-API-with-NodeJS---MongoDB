@@ -4,11 +4,9 @@ const expressSanitizer = require('express-sanitizer');
 
 const authRouter = express.Router();
 
-
 authRouter.post('/', async (req, res) => {
-    //Sanejar l'entrada
-    const username = req.body.username
-    const password = req.body.password
+    const username = req.sanitize(req.body.username)
+    const password = req.sanitize(req.body.password)
 
     const token = await login(username, password)
 
