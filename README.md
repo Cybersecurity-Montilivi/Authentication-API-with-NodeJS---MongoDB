@@ -1,10 +1,5 @@
 # Using ExpressJS with Docker MongoDB
 
-### Architecture of this project
-
-Middelware <> Router <> Service <> Model <> BD
-
-
 ### Configuring MongoDB with Docker
 We will use the docker compose for build this image docker.
 
@@ -157,3 +152,7 @@ For get the all users we will put this command
 ~~~
 http://localhost:3000/users
 ~~~
+
+### Architecture of this project
+
+Middelware <> Router <> Service <> Model <> BD

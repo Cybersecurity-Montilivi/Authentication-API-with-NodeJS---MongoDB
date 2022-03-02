@@ -13,8 +13,7 @@
     "log4js": "^6.4.1",
     "mongoose": "^6.1.9",
     "nodemon": "^2.0.15",
-    "request": "^2.88.2",
-    "sanitize": "^2.1.0"
+    "request": "^2.88.2"
   },
   "scripts": {
     "start": "nodemon app.js"
