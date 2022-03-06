@@ -1,13 +1,11 @@
 const User = require("../models/user.model")
-const jwt = require('jswonwebtoken')
+const jwt = require('jsonwebtoken')
 const { getUser } = require('./user.service')
 
-const login = async (username, password) => {
-    //Cercar el user per username
-    const user = await User.findOne({ username: username })
+require("dotenv").config();
 
-    //Comprovar que el password es correcte
-    //Retornar la resposta
+const login = async (username, password) => {
+    const user = await User.findOne({ username: username })
 
     const isAuthenticated = await user.verifyPassword(password)
     if (!isAuthenticated) {
@@ -18,8 +16,8 @@ const login = async (username, password) => {
 }
 
 const verifyToken = async (token) => {
-    var decoded = jwt.verify(token, proces.env.JWT_SECRET)
-    return user = await getUser(decoded.userId);
+    var decoded = jwt.verify(token, process.env.JWT_SECRET)
+    return user = await getUser(decoded.userID);
 
 };
 

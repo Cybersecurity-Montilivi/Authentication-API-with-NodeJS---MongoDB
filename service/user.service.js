@@ -1,13 +1,21 @@
 const User = require("../models/user.model")
 
 const createUser = async (username, password) => {
-    //verifica que l'usuari no existeix
-    const userExists = await User.findOne({ username: username })
-    // TODO : verifivar que la password compleix l'estandard
-    if (userExists)
-        throw new Error("The user already exists")
 
+    const userExists = await User.findOne({ username: username })
+
+    if (userExists) {
+        return "userExists"
+    }
     const newUser = new User({ username })
+
+    console.log("Nem a validar la password")
+    var pwdvalidate = newUser.passwordValidate(password) == false
+    console.log(pwdvalidate)
+    if (pwdvalidate == false) {
+        console.log("invalidPass")
+        return "invalidPassword"
+    }
 
     await newUser.setPassword(password);
 

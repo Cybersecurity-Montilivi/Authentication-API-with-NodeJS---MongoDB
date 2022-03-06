@@ -6,7 +6,7 @@ const authRouter = express.Router();
 
 
 authRouter.post('/', async (req, res) => {
-    //Sanejar l'entrada
+
     const username = req.body.username
     const password = req.body.password
 

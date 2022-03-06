@@ -3,8 +3,8 @@ const { verifyToken } = require("../service/auth.service");
 
 const middleware = async (req, res, next) => {
     try {
-        const token = req.headers.Authorization
-        const user = await verifyToken(token)
+        const token = req.headers.authorization
+        const user = await verifyToken(token.replace("Bearer ", ""))
         if (!user) {
             return res.status(401).send('Invalid  token authorization');
         }
