@@ -3,6 +3,21 @@
 
 Middelware <> Router <> Service <> Model <> BD
 
+### SETING ENVOIRMENT 
+
+Here we have an example of .env, for use mongoDB on local we need to define MONGODB_ENV=PRE and for use MONGO DB ATLAS we need to define on .env MONGODB_ENV=PRO
+
+~~~
+MONGODB_USER=
+MONGODB_PASSWORD=
+MONGODB_HOST=
+MONGODB_PORT=
+MONGODB_DATABASE=
+MONGODB_ENV=
+
+JWT_SECRET=
+~~~
+
 ### Configuring MongoDB with Docker
 We will use the docker compose for build this image docker.
 

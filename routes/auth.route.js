@@ -15,7 +15,7 @@ authRouter.post('/', async (req, res) => {
     if (token) {
         return res.send({ token })
     }
-    return res.status(403).send('Invalid username or password')
+    return res.status(400).send('Invalid username or password')
 
 })
 

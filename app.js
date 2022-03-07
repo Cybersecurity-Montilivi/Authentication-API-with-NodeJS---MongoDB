@@ -24,7 +24,6 @@ app.get("/users", async (req, res) => {
 	res.send(dbRes)
 });
 
-
 process.on("SIGINT", function () {
 	disconnectDB().then(() => {
 		server.close(function () {

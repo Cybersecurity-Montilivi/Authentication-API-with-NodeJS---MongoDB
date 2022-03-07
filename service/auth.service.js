@@ -5,13 +5,22 @@ const { getUser } = require('./user.service')
 require("dotenv").config();
 
 const login = async (username, password) => {
-    const user = await User.findOne({ username: username })
 
-    const isAuthenticated = await user.verifyPassword(password)
-    if (!isAuthenticated) {
+    const user = await User.findOne({ username: username })
+    console.log(user)
+
+    if (user == null) {
         return null
+    } else {
+        const isAuthenticated = await user.verifyPassword(password)
+
+        if (!isAuthenticated) {
+            return null
+        }
+
+        return await user.generateToken();
+
     }
-    return await user.generateToken();
 
 }
 
