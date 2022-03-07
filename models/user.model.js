@@ -3,11 +3,18 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('@hapi/joi');
+const strongPasswordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+const stringPassswordError = new Error("Password must be strong. At least one upper case alphabet. At least one lower case alphabet. At least one digit. At least one special character. Minimum eight in length")
 
 const userSchema = new Schema({
     username: String,
     hashPassword: String,
     salt: String
+});
+
+
+const passwordSchema = Joi.object().keys({
+    password: Joi.string().regex(strongPasswordRegex).error(stringPassswordError).required()
 });
 
 userSchema.methods.verifyPassword = async function (password) {
@@ -20,12 +27,14 @@ userSchema.methods.setPassword = async function (password) {
 }
 
 userSchema.methods.passwordValidate = async function (password) {
-    var mediumRegex = new RegExp("^(?=.{8,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
 
-    if (mediumRegex.test(password))
-        return true
-    else
+    const notValid = passwordSchema.validate({ password: password }).error;
+
+    if (notValid) {
         return false
+    } else {
+        return true
+    }
 }
 
 userSchema.methods.generateToken = async function () {

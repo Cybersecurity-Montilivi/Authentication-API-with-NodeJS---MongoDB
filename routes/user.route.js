@@ -5,6 +5,7 @@ const expressSanitizer = require('express-sanitizer');
 const userRouter = express.Router()
 
 const User = require("../models/user.model");
+const { find } = require("../models/user.model");
 
 userRouter.post("/", async (req, res) => {
     const username = req.body.username
@@ -32,29 +33,43 @@ userRouter.post("/", async (req, res) => {
 userRouter.get("/:username", async (req, res) => {
     var username = req.params.username;
 
-    var dbRes = await User.find({ 'username': username }, function (err, dbres) {
-        if (err) {
-            res.send("The user don't exists");
-            return handleError(err);
-        }
-        else {
-            res.send(dbres);
-        }
+    var dbRes = await User.exists({ 'username': username })
+    if (dbRes == false) {
+        res.send("Error geting user : The user d'ont exists")
+    }
+    else {
+        var dbRes = await User.find({ 'username': username }, function (err, dbres) {
+            if (err) {
+                res.send("The user don't exists");
+                return handleError(err);
+            }
+            else {
+                res.send(dbres);
+            }
 
-    })
+        })
+    }
+
 });
 
 
 userRouter.delete("/:username", async (req, res) => {
     var username = req.params.username;
-    //TO DO VERIFICAR SI LUSUARI EXISTEIX PERQUE SINO SEMPRE POSA USER X DELETED
-    User.deleteMany({ 'username': username }, function (err) {
-        if (err) {
-            res.send("Error deleting user, probably user d'ont exists")
-            return handleError(err);
-        }
-        else res.status(200).send(username + ' deleted')
-    });
+
+    var dbRes = await User.exists({ 'username': username })
+
+    if (dbRes == false) {
+        res.send("Error deleting user : The user d'ont exists")
+    }
+    else {
+        User.deleteMany({ 'username': username }, function (err) {
+            if (err) {
+                res.send("Error deleting user")
+                return handleError(err);
+            }
+            else res.status(200).send(username + ' deleted')
+        });
+    }
 
 });
 

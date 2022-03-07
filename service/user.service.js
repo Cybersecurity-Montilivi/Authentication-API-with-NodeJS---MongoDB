@@ -9,11 +9,9 @@ const createUser = async (username, password) => {
     }
     const newUser = new User({ username })
 
-    console.log("Nem a validar la password")
-    var pwdvalidate = newUser.passwordValidate(password) == false
-    console.log(pwdvalidate)
+    var pwdvalidate = await newUser.passwordValidate(password)
+
     if (pwdvalidate == false) {
-        console.log("invalidPass")
         return "invalidPassword"
     }
 
