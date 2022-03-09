@@ -2,6 +2,12 @@
 
 Middelware <> Router <> Service <> Model <> BD
 
+### Using Vault
+
+[Source: ](https://testdriven.io/blog/managing-secrets-with-vault-and-consul/)
+
+[Source: ](https://hub.docker.com/_/vault)
+
 ### SETING ENVOIRMENT 
 
 Here we have an example of .env, for use mongoDB on local we need to define MONGODB_ENV=PRE and for use MONGO DB ATLAS we need to define on .env MONGODB_ENV=PRO
