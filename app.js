@@ -1,6 +1,6 @@
 const express = require("express");
 const logger = require("./log/logger.log")
-const { getConnection, disconnectDB } = require("./dbConnection");
+const { getConxnection, disconnectDB } = require("./dbConnection");
 const app = express();
 const port = 3000;
 const authMiddleware = require("./middleware/auth.middleware")
