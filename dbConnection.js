@@ -9,7 +9,7 @@ const connectDB = async () => {
         var connectionString = urlProd()
     }
     else if (process.env.MONGODB_ENV == 'PRE') {
-        var connectionString = urlProd()
+        var connectionString = urlPre()
     }
     else console.log("Error: Incorrect envoirment")
     return await mongoose.connect(connectionString);

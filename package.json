@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.4.1",
     "mongoose": "^6.1.9",
+    "node-vault": "^0.9.22",
     "nodemon": "^2.0.15",
     "request": "^2.88.2"
   },

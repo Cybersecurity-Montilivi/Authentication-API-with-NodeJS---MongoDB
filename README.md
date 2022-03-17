@@ -6,7 +6,9 @@ Middelware <> Router <> Service <> Model <> BD
 
 [Source: ](https://testdriven.io/blog/managing-secrets-with-vault-and-consul/)
 
-[Source: ](https://hub.docker.com/_/vault)
+[Source configuring vault: ](https://gitlab.com/kawsark/vault-agent-docker/-/blob/master/docker-compose.yml)
+
+https://stackoverflow.com/questions/64438086/docker-compose-using-with-git-clone
 
 ### SETING ENVOIRMENT 
 

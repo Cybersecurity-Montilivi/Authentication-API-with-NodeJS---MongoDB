@@ -9,6 +9,7 @@ const userRouter = require("./routes/user.route")
 const authRouter = require("./routes/auth.route")
 const User = require("./models/user.model");
 
+require("dotenv").config();
 
 app.use(express.json())
 app.use('/user', authMiddleware, userRouter)
@@ -16,7 +17,7 @@ app.use('/login', authRouter)
 
 const server = app.listen(port, async () => {
 	const db = await getConnection();
-	console.log(`Example app listening on port ${port}`);
+	console.log(`App listening on port ${port}`);
 });
 
 app.get("/users", async (req, res) => {

@@ -7,7 +7,6 @@ require("dotenv").config();
 const login = async (username, password) => {
 
     const user = await User.findOne({ username: username })
-    console.log(user)
 
     if (user == null) {
         return null
