@@ -1,61 +1,28 @@
 const express = require("express");
 const logger = require("./log/logger.log")
-const { getConnection, disconnectDB } = require("./dbConnection");
+const { getConxnection, disconnectDB } = require("./dbConnection");
 const app = express();
 const port = 3000;
+const authMiddleware = require("./middleware/auth.middleware")
 
-app.use(express.json())
-
+const userRouter = require("./routes/user.route")
+const authRouter = require("./routes/auth.route")
 const User = require("./models/user.model");
 
-app.get("/user/:username", async (req, res) => {
-	var username = req.params.username;
+require("dotenv").config();
 
-	var dbRes = await User.find({ 'username': username }, function (err, dbres) {
-		if (err) {
-			console.log("El usuari no existeix");
-			res.send("El usuari no existeix");
-			return handleError(err);
-		}
-		else {
-			res.send(dbres);
-		}
+app.use(express.json())
+app.use('/user', authMiddleware, userRouter)
+app.use('/login', authRouter)
 
-	})
+const server = app.listen(port, async () => {
+	const db = await getConnection();
+	console.log(`App listening on port ${port}`);
 });
-
-app.post("/user", async (req, res) => {
-	console.log(req.body);
-
-	await User.create({
-		username: req.body.username,
-		password: req.body.password
-	});
-	return res.send("")
-});
-
-
-app.delete("/user/:username", async (req, res) => {
-	var username = req.params.username;
-
-	User.deleteMany({ 'username': username }, function (err) {
-		if (err) return handleError(err);
-
-	});
-
-});
-
 
 app.get("/users", async (req, res) => {
 	var dbRes = await User.find({});
 	res.send(dbRes)
-});
-
-
-const server = app.listen(port, async () => {
-	const db = await getConnection();
-	console.log(db);
-	console.log(`Example app listening on port ${port}`);
 });
 
 process.on("SIGINT", function () {
