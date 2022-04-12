@@ -1,15 +1,13 @@
 const express = require("express");
 const { createUser } = require("../service/user.service")
-const expressSanitizer = require('express-sanitizer');
-
 const userRouter = express.Router()
 
 const User = require("../models/user.model");
 const { find } = require("../models/user.model");
 
 userRouter.post("/", async (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
+    const username = req.sanitize(req.body.username)
+    const password = req.sanitize(req.body.password)
 
     const newUser = await createUser(username, password)
 
@@ -31,7 +29,7 @@ userRouter.post("/", async (req, res) => {
 
 
 userRouter.get("/:username", async (req, res) => {
-    var username = req.params.username;
+    var username = req.sanitize(req.params.username)
 
     var dbRes = await User.exists({ 'username': username })
     if (dbRes == false) {
@@ -54,7 +52,7 @@ userRouter.get("/:username", async (req, res) => {
 
 
 userRouter.delete("/:username", async (req, res) => {
-    var username = req.params.username;
+    var username = req.sanitize(req.params.username)
 
     var dbRes = await User.exists({ 'username': username })
 

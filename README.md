@@ -1,15 +1,23 @@
 ### Architecture of this project
 
 Middelware <> Router <> Service <> Model <> BD (MongoLocalDB or MongoAtlasDB)
-### Instaling Moongose ORM
 
-For connect with Mongo DataBase we will use ORM Moongose,  first we need to add moongose to Node JS Project
+### Yarn install
 
-~~~
-yarn add mongoose
-~~~
+With this project, we use yarn to add all dependencies, first you need to be installed the nmp, and after we install yarn
+
+~~~~
+npm install --global yarn
+~~~~
+
+After you clone this repo, you need to add all the dependencies
+
+~~~~
+yarn install
+~~~~
+
 ## Using Express Api
-First we need to start our express aplication, we will use the command 
+First we need to start our express application, we will use the command 
 
 ~~~
 yarn start
@@ -27,7 +35,7 @@ If we want to take the Login token, we will post into body request, the username
 
 ### Authentication
 
-If we want to, post,get or delete a user we need to use the token for authenticate, in all requests we need to put the token.
+If we want to, post, get or delete a user we need to use the token for authenticate, in all requests we need to put the token.
 
 ![Postman](./images/autentication.png)
 
